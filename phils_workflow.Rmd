@@ -1,0 +1,34 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+packages
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+load data
+```{r}
+X35020903 <- read_csv("https://ndownloader.figshare.com/files/35020903")
+X35020903
+```
+
+wrangle data
+```{r}
+edit_x35 <- X35020903 %>%
+ filter(sex %in% "Female" | is.na(sex)) %>%
+ filter(!(lineage %in% "unknown"))
+```
+
+viz data
+```{r}
+ggplot(edit_x35) +
+ aes(x = primary_disease, fill = lineage) +
+ geom_bar() +
+ scale_fill_hue(direction = 1) +
+ coord_flip() +
+ theme_minimal()
+```
